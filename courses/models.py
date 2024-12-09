@@ -5,7 +5,7 @@ class Course(models.Model):
     """Модель курса"""
 
     name = models.CharField(
-        unicue=True, max_length=100, verbose_name="Название курса", help_text="Введите название курса"
+        unique=True, max_length=100, verbose_name="Название курса", help_text="Введите название курса"
     )
     description = models.TextField(
         verbose_name="Описание курса", help_text="Введите описание курса", blank=True, null=True
@@ -26,7 +26,7 @@ class Lesson(models.Model):
     """Модель урока"""
 
     name = models.CharField(
-        unicue=True, max_length=100, verbose_name="Название урока", help_text="Введите название урока"
+        unique=True, max_length=100, verbose_name="Название урока", help_text="Введите название урока"
     )
     description = models.TextField(
         verbose_name="Описание урока", help_text="Введите описание урока", blank=True, null=True
