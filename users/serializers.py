@@ -4,7 +4,7 @@ from users.models import User, Payment
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-    ''' Сериализатор для платежа '''
+    """Сериализатор для платежа"""
 
     class Meta:
         model = Payment
@@ -12,10 +12,11 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    ''' Сериализатор для пользователя '''
+    """Сериализатор для пользователя"""
 
-    payment = PaymentSerializer(source='payment_set', many=True, read_only=True)
+    payment = PaymentSerializer(source="payment_set", many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ["id", "email", "first_name", "last_name", "phone", "city", "avatar", "payment"]
+        fields = "__all__"
+        # fields = ["id", "email", "first_name", "last_name", "phone", "city", "avatar", "payment"]
