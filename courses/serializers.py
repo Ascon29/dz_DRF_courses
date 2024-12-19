@@ -10,15 +10,15 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ["id", "name", "course", "description", "preview", "video", "owner"]
-        validators = [YoutubeOnly(field='video')]
+        validators = [YoutubeOnly(field="video")]
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    """ Сериализатор для подписки """
+    """Сериализатор для подписки"""
 
     class Meta:
         model = Subscription
-        fields = ['user', 'course']
+        fields = ["user", "course"]
 
 
 class CourseSerializer(serializers.ModelSerializer):

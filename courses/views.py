@@ -10,7 +10,7 @@ from users.permissions import IsModer, IsOwner
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    """ Контроллер работы с курсами. """
+    """Контроллер работы с курсами."""
 
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
@@ -30,7 +30,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 
 class LessonListAPIView(generics.ListAPIView):
-    """ Контроллер списка уроков. """
+    """Контроллер списка уроков."""
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
@@ -38,7 +38,7 @@ class LessonListAPIView(generics.ListAPIView):
 
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
-    """ Контроллер информации об уроке. """
+    """Контроллер информации об уроке."""
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
@@ -46,7 +46,7 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
-    """ Контроллер создания урока. """
+    """Контроллер создания урока."""
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
@@ -57,7 +57,7 @@ class LessonCreateAPIView(generics.CreateAPIView):
 
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
-    """ Контроллер редактирования урока. """
+    """Контроллер редактирования урока."""
 
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
@@ -65,28 +65,28 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
 
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
-    """ Контроллер удаления урока. """
+    """Контроллер удаления урока."""
 
     queryset = Lesson.objects.all()
     permission_classes = (IsAuthenticated, IsOwner)
 
 
 class SubscriptionAPIView(views.APIView):
-    """ Контроллер удаления/добавления подписки на курс. """
+    """Контроллер удаления/добавления подписки на курс."""
 
     queryset = Subscription.objects.all()
     serializer_class = SubscriptionSerializer
 
     def post(self, *args, **kwargs):
         user = self.request.user
-        course_id = self.request.data.get('course')
+        course_id = self.request.data.get("course")
         course_item = get_object_or_404(Course, pk=course_id)
         subs_item = Subscription.objects.filter(user=user, course=course_item)
 
         if subs_item.exists():
             subs_item.delete()
-            message = 'подписка удалена'
+            message = "подписка удалена"
         else:
             Subscription.objects.create(user=user, course=course_item).save()
-            message = 'подписка добавлена'
+            message = "подписка добавлена"
         return Response({"message": message})
