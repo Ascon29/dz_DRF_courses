@@ -1,5 +1,7 @@
 from django.db import models
 
+from config import settings
+
 
 class Course(models.Model):
     """Модель курса"""
@@ -13,9 +15,17 @@ class Course(models.Model):
     preview = models.ImageField(
         upload_to="courses/previews", verbose_name="Превью", help_text="Загрузите изображение", blank=True, null=True
     )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Владелец",
+        help_text="Укажите владельца курса",
+    )
 
     def __str__(self):
-        return f'Курс: {self.name}'
+        return f"Курс: {self.name}"
 
     class Meta:
         verbose_name = "Курс"
@@ -35,8 +45,14 @@ class Lesson(models.Model):
         upload_to="courses/previews", verbose_name="Превью", help_text="Загрузите изображение", blank=True, null=True
     )
     video = models.URLField(verbose_name="Видео", help_text="Ссылка на видео урок", blank=True, null=True)
-    course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name="lessons", verbose_name="Курс", help_text="Выберите курс"
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс")
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Владелец",
+        help_text="Укажите владельца урока",
     )
 
     def __str__(self):
