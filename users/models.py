@@ -38,7 +38,7 @@ class Payment(models.Model):
     PAYMENT_CHOICES = ((CASH, "Наличные"), (NON_CASH, "Безналичный перевод"))
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    payment_date = models.DateField(verbose_name="Дата оплаты", help_text="Введите дату оплаты")
+    payment_date = models.DateField(verbose_name="Дата оплаты", help_text="Введите дату оплаты", blank=True, null=True)
     course = models.ForeignKey(
         Course,
         on_delete=models.SET_NULL,
@@ -57,8 +57,15 @@ class Payment(models.Model):
     )
     amount = models.PositiveIntegerField(verbose_name="Сумма оплаты", help_text="Введите сумму оплаты")
     payment_method = models.CharField(
-        choices=PAYMENT_CHOICES, max_length=50, verbose_name="Способ платежа", help_text="Выберите способ платежа"
+        choices=PAYMENT_CHOICES,
+        max_length=50,
+        verbose_name="Способ платежа",
+        help_text="Выберите способ платежа",
+        blank=True,
+        null=True,
     )
+    session_id = models.CharField(max_length=255, verbose_name="ID сессии", blank=True, null=True)
+    payment_link = models.URLField(max_length=500, verbose_name="Ссылка на оплату", blank=True, null=True)
 
     class Meta:
         verbose_name = ("Оплата",)
