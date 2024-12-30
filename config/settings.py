@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "courses",
     "users",
     "django_filters",
+    "drf_yasg",
 ]
 
 REST_FRAMEWORK = {
@@ -115,3 +116,5 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
