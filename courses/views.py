@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from courses.models import Course, Lesson, Subscription
 from courses.paginations import CustomPagination
 from courses.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from courses.tasks import notification
 from users.permissions import IsModer, IsOwner
 
 
@@ -18,6 +19,12 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        updated_course = serializer.save()
+        course_name = updated_course.name
+        notification.delay(updated_course.id, course_name)
+        updated_course.save()
 
     def get_permissions(self):
         if self.action == "create":
